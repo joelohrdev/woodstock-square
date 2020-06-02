@@ -46,6 +46,7 @@ function event_post_type()
             'menu_position' => 6,
             'rewrite'     => array('slug' => 'events'),
             'taxonomies'  => array('category'),
+            'show_in_rest' => true,
         )
     );
 }
