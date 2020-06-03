@@ -1,3 +1,5 @@
+<?php get_header(); ?>
+
 <?php
 $today = date('Y/m/d');
 
@@ -10,23 +12,24 @@ $args = array(
         array(
             'key'     => 'start_date',
             'value'   => $today,
-            'compare' => '=',
+            'compare' => '>=',
             'type'    => 'DATE',
         )
     ),
 );
 $loop = new WP_Query($args);
 ?>
-<div class="home-events px-5 my-10">
-    <h1 class="text-3xl text-black border-b pb-2 mb-2 font-bold">Today!</h1>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-12">
+
+<div class="container mx-auto my-10">
+    <h1 class="text-peach text-3xl font-bold mb-5">Events</h1>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-12 px-5 md:px-0">
         <?php if ($loop->have_posts()) : while ($loop->have_posts()) : $loop->the_post(); ?>
-            <div class="event border-b pb-2 mb-2">
+            <div class="event pb-2 mb-2">
                 <a href="<?php the_permalink(); ?>" class="text-peach font-bold text-xl"><?php the_title(); ?></a>
                 <p class="text-black text-sm font-semibold">
                     <?php
-                        $date = DateTime::createFromFormat('Y/m/d', get_field('start_date'));
-                        echo $date->format('F d, Y');
+                    $date = DateTime::createFromFormat('Y/m/d', get_field('start_date'));
+                    echo $date->format('F d, Y');
                     ?> |
                     <?php the_field('start_time'); ?> -
                     <?php the_field('end_time'); ?></p>
@@ -39,3 +42,5 @@ $loop = new WP_Query($args);
         <?php endif; ?>
     </div>
 </div>
+
+<?php get_footer(); ?>
